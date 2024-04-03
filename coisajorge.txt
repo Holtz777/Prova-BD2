@@ -1,0 +1,222 @@
+CREATE TABLE films (
+	id BIGINT PRIMARY KEY GENERATED ALWAYS AS INDENTIFY NOT NULL,
+	path VARCHAR(30) NOT NULL UNIQUE,
+	title VARCHAR(160) NOT NULL,
+	duration_in_minutes DECIMAL NOT NULL, 
+	post_date DATE NOT NULL,
+	principal_actors TEXT NOT NULL,
+	director BIGINT NOT NULL,
+	gender VARCHAR(60) NOT NULL,
+	poster BYTEA NOT NULL,
+	FOREIGN KEY (director) REFERENCES artists_directors(id)
+);
+
+CREATE TABLE artists_directors(
+	id BIGINT PRIMARY KEY GENERATED ALWAYS AS INDENTIFY NOT NULL,
+	name VARCHAR(55) NOT NULL,
+	birth_date DATE NOT NULL,
+	death_date DATE,
+	type CHAR(1) NOT NULL, --A/D/B(ARTISTA/DIRETOR/BOTH)
+	biografy TEXT,
+	most_famous_film VARCHAR(160)
+);
+
+CREATE TABLE users(
+	id BIGINT PRIMARY KEY GENERATED ALWAYS AS INDENTIFY NOT NULL,
+	email VARCHAR(150) UNIQUE NOT NULL,
+	password VARCHAR(160) NOT NULL,
+	name VARCHAR(70) NOT NULL,
+	age INT NOT NULL,
+	fav_gender TEXT,
+	profile_creation_date DATE NOT NULL,
+	last_access TIMESTAMP NOT NULL,
+	phone CHAR(13) UNIQUE,
+	plan_id BIGINT NOT NULL,
+	FOREIGN KEY (plan) REFERENCES plans(id)
+);
+
+CREATE TABLE plans(
+	id BIGINT PRIMARY KEY GENERATED ALWAYS AS INDENTIFY NOT NULL,
+	name VARCHAR(40) NOT NULL,
+	price MONEY NOT NULL,
+	recurrence VARCHAR(40) NOT NULL,
+	plan_desc TEXT NOT NULL,
+	logged_number_allowed INT NOT NULL,
+	
+);
+
+INSERT INTO films (
+	id,
+	path,
+	title,
+	duration_in_minutes, 
+	post_date,
+	principal_actors,
+	director,
+	gender,
+	poster
+)
+VALUES
+(
+	1,
+	'film1.mp3',
+	'film1',
+	120.00,
+	12/05/2007,
+	'Adam Sandler',
+	'Adam Sandler',
+	'comedy',
+	'poster1.jpg'
+),
+(
+	2,
+	'film2.mp3',
+	'film2',
+	121.00,
+	12/05/2008,
+	'Radam Sandlers',
+	'Radam Sandlers',
+	'Horror',
+	'poster2.jpg'
+),
+(
+	3,
+	'film3.mp3',
+	'film3',
+	140.00,
+	12/05/2003,
+	'Fadam Sand',
+	'Fadam Sand',
+	'Romance',
+	'poster3.jpg'
+);
+
+INSERT INTO artists_directors (
+	id,
+	name,
+	birth_date,
+	death_date,
+	type,
+	biografy,
+	most_famous_film
+)
+VALUES 
+(
+	1,
+	'Fred',
+	21/12/1992,
+	NULL,
+	A,
+	'biografia 1',
+	'filme famoso 1'
+),
+
+(
+	2,
+	'Fredin',
+	22/02/1994,
+	NULL,
+	A,
+	'biografia 2',
+	'filme famoso 2'
+),	
+(
+	3,
+	'Fredon',
+	22/02/1623,
+	25/06/1700,
+	A,
+	'biografia 3',
+	'filme famoso 3'
+),	
+(
+	4,
+	'Freder',
+	22/02/1901,
+	11/05/1960,
+	A,
+	'biografia 4',
+	'filme famoso 4'
+),
+(
+	5,
+	'Pedro',
+	05/02/1991,
+	NULL,
+	D,
+	'biografia 5',
+	'filme famoso 5'
+);
+
+INSERT INTO users (
+	id,
+	email,
+	password,
+	name,
+	age,
+	fav_gender,
+	profile_creation_date,
+	last_access,
+	phone,
+	plan_id
+)
+VALUES 
+(
+	1,
+	'fred@gmail.com',
+	'senha123',
+	'Frederico',
+	35,
+	'Horror',
+	05/02/2014,
+	05/02/2022 11:30:22,
+	12345678910,
+	1
+),
+(
+	2,
+	'frediz@gmail.com',
+	'senha1234',
+	'Fredericoz',
+	36,
+	'Horror',
+	05/02/2019,
+	05/02/2024 03:40:22,
+	12345678911,
+	2
+);
+
+INSERT INTO plans (
+	id,
+	name,
+	price,
+	recurrence,
+	plan_desc,
+	logged_number_allowed
+)
+VALUES (
+	1,
+	'vivo',
+	400.00,
+	'Em dia',
+	'Plano top',
+	'1'
+),
+
+(
+	2,
+	'claro',
+	200.00,
+	'Em dia',
+	'Plano merda',
+	'4'
+),
+
+(
+	3,
+	'oi',
+	100.00,
+	'Não esta em dia'
+	'Plano meia bomba'
+	'5'
+);
